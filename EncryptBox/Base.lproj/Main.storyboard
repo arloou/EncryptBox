@@ -1,25 +1,171 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="ViewController" customModuleProvider="" sceneMemberID="viewController">
+                <viewController id="vXZ-lx-hvc" customClass="ViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z01-jD-GyE">
+                                <rect key="frame" x="46" y="482" width="229" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="CK4-nu-vfZ"/>
+                                    <constraint firstAttribute="width" constant="229" id="Iy7-Oo-eOE"/>
+                                </constraints>
+                                <attributedString key="attributedText">
+                                    <fragment content="Welcome to use EncryptBox">
+                                        <attributes>
+                                            <color key="NSColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" size="15" name="Papyrus"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WBF-g8-K2L">
+                                <rect key="frame" x="46" y="511" width="229" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="3Ip-iz-Vqf"/>
+                                    <constraint firstAttribute="width" constant="229" id="cdQ-rZ-PJq"/>
+                                </constraints>
+                                <attributedString key="attributedText">
+                                    <fragment content="Your safe box™">
+                                        <attributes>
+                                            <color key="NSColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="WBF-g8-K2L" firstAttribute="top" secondItem="z01-jD-GyE" secondAttribute="bottom" constant="8" id="J79-8X-JBY"/>
+                            <constraint firstAttribute="centerX" secondItem="WBF-g8-K2L" secondAttribute="centerX" id="SaX-Fu-W0M"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="WBF-g8-K2L" secondAttribute="bottom" constant="36" id="aiZ-Dp-1co"/>
+                            <constraint firstAttribute="centerX" secondItem="z01-jD-GyE" secondAttribute="centerX" id="pKJ-2d-kYA"/>
+                        </constraints>
                     </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <segue destination="22i-gJ-Ogf" kind="show" identifier="toSecView" id="mo8-Zz-X1E"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-107" y="446"/>
+        </scene>
+        <!--Main View Controller-->
+        <scene sceneID="lxC-QX-SmH">
+            <objects>
+                <viewController storyboardIdentifier="mainView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="qDk-g2-fWj" customClass="MainViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="HBi-6x-rBc"/>
+                        <viewControllerLayoutGuide type="bottom" id="bZ2-au-v15"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="DRP-Yg-ot8">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Oab-bt-GSU">
+                                <rect key="frame" x="16" y="520" width="288" height="29"/>
+                                <segments>
+                                    <segment title="first"/>
+                                    <segment title="Second"/>
+                                </segments>
+                                <color key="tintColor" red="0.25490196079999999" green="0.80392156859999997" blue="0.27058823529999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="selectSC:" destination="qDk-g2-fWj" eventType="valueChanged" id="eda-B0-IS4"/>
+                                </connections>
+                            </segmentedControl>
+                            <tableView clipsSubviews="YES" tag="11" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="iVd-h5-elp">
+                                <rect key="frame" x="16" y="20" width="130" height="492"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="tintColor" red="0.25490196079999999" green="0.80392156859999997" blue="0.27058823529999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="separatorColor" red="0.25490196079999999" green="0.80392156859999997" blue="0.27058823529999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <color key="sectionIndexColor" red="0.25490196079999999" green="0.80392156859999997" blue="0.27058823529999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="sectionIndexTrackingBackgroundColor" red="0.25490196079999999" green="0.80392156859999997" blue="0.27058823529999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="m7M-4z-etL">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="m7M-4z-etL" id="Sjd-K4-v4W">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="qDk-g2-fWj" id="uj9-u8-cg4"/>
+                                    <outlet property="delegate" destination="qDk-g2-fWj" id="8y5-Tn-DHe"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="mySC" destination="Oab-bt-GSU" id="knm-hj-IN4"/>
+                        <outlet property="tableView" destination="iVd-h5-elp" id="Gxw-oS-w4K"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tDR-ue-0Tu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="480" y="448"/>
+        </scene>
+        <!--Introduction View Controller-->
+        <scene sceneID="Ign-4F-yyN">
+            <objects>
+                <viewController storyboardIdentifier="introductionView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="22i-gJ-Ogf" customClass="IntroductionViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="CGM-hQ-s0U"/>
+                        <viewControllerLayoutGuide type="bottom" id="azl-hc-M5V"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="QFR-RK-egf">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hackerWorld.png" translatesAutoresizingMaskIntoConstraints="NO" id="z0b-tN-XZH">
+                                <rect key="frame" x="0.0" y="171" width="320" height="225"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="320" id="2Me-kZ-qe9"/>
+                                    <constraint firstAttribute="height" constant="225" id="a6w-bQ-l3P"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerY" secondItem="z0b-tN-XZH" secondAttribute="centerY" id="JlA-BN-1oZ"/>
+                            <constraint firstAttribute="centerX" secondItem="z0b-tN-XZH" secondAttribute="centerX" id="jb7-8s-kXW"/>
+                        </constraints>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="bgImageView" destination="z0b-tN-XZH" id="Cv2-kK-2Gu"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eZp-UT-SLk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-50" y="1205"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="hackerWorld.png" width="1000" height="704"/>
+    </resources>
 </document>

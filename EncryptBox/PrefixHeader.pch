@@ -1,0 +1,21 @@
+//
+//  PrefixHeader.pch
+//  allFonts
+//
+//  Created by ucs on 15/1/20.
+//  Copyright (c) 2015年 ucs. All rights reserved.
+//
+
+#ifndef allFonts_PrefixHeader_pch
+#define allFonts_PrefixHeader_pch
+
+#endif
+
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import "CommonDefine.h"
+#import "userInfo.h"
+#import "NSString+Extension.h"
+#import "TipsAlertView.h"
+#endif
