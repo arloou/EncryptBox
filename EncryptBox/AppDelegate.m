@@ -16,7 +16,20 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    
+    NSString * filePath=[DOCUMENTPATH stringByAppendingPathComponent:INTRODUCEFILENAME];
+    NSFileManager * fm=[NSFileManager defaultManager];
+    if (![fm fileExistsAtPath:filePath]) {
+        NSString * message_En=@"Apple Watch works with its paired iPhone to display local and remote notifications. Initially, Apple Watch uses a minimal interface to display incoming notifications. When the user’s movement indicates a desire to see more information, the minimal interface changes to a more detailed interface displaying the contents of the notification. You can customize this detailed interface and add custom graphics or arrange the notification data differently from the default interface provided by the system Apple Watch provides automatic support for the actionable notifications introduced in iOS 8. Actionable notifications are a way to add buttons to your notification interface that reflect actions the user might take. For example, a notification for a meeting invite might include buttons to accept or reject the invitation. When your iOS app registers support for actionable notifications, Apple Watch automatically adds appropriate buttons to the notification interfaces on Apple Watch. All you need to do is handle the actions that the user selects. You do this in your WatchKit extension.";
+        NSString * message_Ch=@"EncryptBox是一款加密保存各类账户信息的应用，简单精致和绝对安全，应用本身不联网，用户的所有账户敏感信息经过用户自定秘钥后进行AES 256bit高级加密标准加密(美国联邦政府采用的一种区块加密标准)，以文件形式保存在应用沙盒中，便于转移，但文件内容无法被编译或攻破，即便是开发者本身也无法获取用户的信息。是一款先进的佩戴式智能手表，可持续监测用户的身体状况。它使用LED光学心率监测器来监测心率，可计算卡路里摄入，具有GPS功能，并且可以像普通手表一样看时间。Surge是目前Fitbit 旗下最强大最精工的一款，售价约250美元(合人民币1550元)。奥巴马之前曾透露过他对新兴的可佩戴式科技很感兴趣。在美国科技网站Re/code 2月对奥巴马的访谈中，他曾表示在Fitbit和Apple watch之间难以抉择。17日，奥巴马就戴着Fitbit智能手表亮相公众活动。                                                                                                                                        ";
+
+        NSDictionary * messageDic=[NSDictionary dictionaryWithObjectsAndKeys:message_En,@"En",message_Ch,@"Ch", nil];
+        
+        [messageDic writeToFile:filePath atomically:YES];
+    }
+    
+    
+    
     return YES;
 }
 
@@ -32,6 +45,14 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    
+    // 每当进入唤醒这个应用，退回首页，重新输入密码
+    UIViewController *appRootVC = [UIApplication sharedApplication].keyWindow.rootViewController;
+    if (appRootVC.presentedViewController) {
+        [appRootVC.presentedViewController dismissViewControllerAnimated:NO completion:nil];
+    }
+    
+    
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {

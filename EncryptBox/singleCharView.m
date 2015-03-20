@@ -24,7 +24,7 @@
     self.layer.borderColor=[UIColor greenColor].CGColor;
     self.bounds=CGRectMake(0, 0, 55, 55);
     self.label.text=@"";
-    self.label.font=[UIFont fontWithName:@"Papyrus" size:30];
+    self.label.font=[UIFont fontWithName:@"AppleSDGothicNeo-Thin" size:30];
     
     timer=[NSTimer scheduledTimerWithTimeInterval:1.5 target:self selector:@selector(checkingText) userInfo:nil repeats:YES];
     
@@ -79,7 +79,6 @@
         animation.path = path;
         [emitterView.layer addAnimation:animation forKey:@"test"];
     }
-    
 }
 
 @end

@@ -11,7 +11,9 @@
 #import "AFViewShaker.h"
 #import "CoreDataManger.h"
 #import "SoundBox.h"
-#import "IntroductionViewController.h"
+//#import "IntroductionViewController.h"
+#import "AccountLIstTableViewController.h"
+#import "DataAnimateView.h"
 
 #define CharView_1_Center CGPointMake([UIScreen mainScreen].bounds.size.width/5, 150)
 #define CharView_2_Center CGPointMake([UIScreen mainScreen].bounds.size.width/5*2, 150)
@@ -40,6 +42,20 @@
 @property(strong,nonatomic)UITextField *pwdTf;
 @property(strong,nonatomic)UITextField *verifyPwdTf;
 @property(nonatomic,assign)BOOL isRegistering;
+
+// animation
+@property(nonatomic,strong)NSTimer*timer;
+@property(nonatomic,strong)NSMutableArray*bottle;
+
+// UIGestureReconizer
+@property(nonatomic,strong)UISwipeGestureRecognizer*swipe;
+
+@property(nonatomic,assign)EBOXLanguage  currentLanguage;
+
+@property (strong, nonatomic) IBOutlet UILabel *bottomLabelA; //Welcome to use EncryptBox
+@property (strong, nonatomic) IBOutlet UILabel *bottomLabelB; //Your safe box™
+
+
 @end
 
 @implementation ViewController
@@ -53,21 +69,43 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
-    _isRegistering=NO;
-    [self initUI];
-
-    UISwipeGestureRecognizer*swipe=[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(backToLogin)];
-    [swipe setDirection:UISwipeGestureRecognizerDirectionRight];
-    [self.view addGestureRecognizer:swipe];
+    self.view.backgroundColor=MainBGColor;
 }
 
+
+#pragma mark - 背景动画
+
+-(void)enterAnimate
+{
+    // clean DataView
+    if (_bottle.count>100) {
+        for (int i=0; i<_bottle.count; i++)
+        {
+            if (i%5==0)
+            {
+                [_bottle[i] removeFromSuperview];
+                [_bottle removeObject:_bottle[i]];
+            }
+        }
+    }
+    
+    // init DataView
+    DataAnimateView*dataView=[[DataAnimateView alloc] init];
+    [_bottle addObject:dataView];
+    [self.view addSubview:dataView];
+    [dataView startToMove];
+    
+    
+    
+}
 
 
 -(void)initUI
 {
-    [self.view setBackgroundColor:[UIColor blackColor]];
+    
+    BOOL isEng=_currentLanguage==EBOXEnglish?YES:NO;
+    
+    //[self.view setBackgroundColor:[UIColor blackColor]];
     _charView1=[[[NSBundle mainBundle] loadNibNamed:@"singleCharView" owner:self options:nil] lastObject];
     _charView2=[[[NSBundle mainBundle] loadNibNamed:@"singleCharView" owner:self options:nil] lastObject];
     _charView3=[[[NSBundle mainBundle] loadNibNamed:@"singleCharView" owner:self options:nil] lastObject];
@@ -119,8 +157,12 @@
     _registerBtn.layer.borderWidth=0.5;
     _registerBtn.layer.borderColor=[UIColor greenColor].CGColor;
     _registerBtn.tintColor=[UIColor clearColor];
-    NSString*btnTitle=@"Set a New PassWord";
-    
+    NSString*btnTitle;
+    if (isEng) {
+        btnTitle=@"Set a New PassWord";
+    }else{
+        btnTitle=@"设置新密码";
+    }
     NSMutableDictionary *textAttrs=[NSMutableDictionary dictionary];
     textAttrs[NSFontAttributeName]=[UIFont fontWithName:@"Papyrus" size:12];
     textAttrs[NSForegroundColorAttributeName]=[UIColor greenColor];
@@ -152,21 +194,21 @@
     //_orignPwdTf.backgroundColor=[UIColor clearColor];
     _orignPwdTf.layer.borderColor=[UIColor greenColor].CGColor;
     _orignPwdTf.layer.borderWidth=1;
-    _orignPwdTf.placeholder=@"pre password";
+    _orignPwdTf.placeholder=isEng?@"pre password":@"原密码";
     _orignPwdTf.textColor=[UIColor greenColor];
     _orignPwdTf.textAlignment=NSTextAlignmentCenter;
     
     //_pwdTf.backgroundColor=[UIColor clearColor];
     _pwdTf.layer.borderColor=[UIColor greenColor].CGColor;
     _pwdTf.layer.borderWidth=1;
-    _pwdTf.placeholder=@"new(4 charaters)";
+    _pwdTf.placeholder=isEng?@"new(4 charaters)":@"新密码(4个数字)";
     _pwdTf.textColor=[UIColor greenColor];
     _pwdTf.textAlignment=NSTextAlignmentCenter;
     
     //_verifyPwdTf.backgroundColor=[UIColor clearColor];
     _verifyPwdTf.layer.borderColor=[UIColor greenColor].CGColor;
     _verifyPwdTf.layer.borderWidth=1;
-    _verifyPwdTf.placeholder=@"again";
+    _verifyPwdTf.placeholder=isEng?@"again":@"密码确认";
     _verifyPwdTf.textColor=[UIColor greenColor];
     _verifyPwdTf.textAlignment=NSTextAlignmentCenter;
     
@@ -191,6 +233,24 @@
     [self.view addSubview:_pwdTf];
     [self.view addSubview:_verifyPwdTf];
     
+    
+    [self changeBottomLabel];
+    
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    _currentLanguage=[LZZSetting getCurrentLanguage];
+    _isRegistering=NO;
+    [self initUI];
+    
+    _swipe=[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(backToLogin)];
+    [_swipe setDirection:UISwipeGestureRecognizerDirectionRight];
+    [self.view addGestureRecognizer:_swipe];
+    
+    
+    _bottle=[NSMutableArray array];
+    _timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(enterAnimate) userInfo:nil repeats:YES];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -214,7 +274,7 @@
 #pragma mark - 回到登录页面
 -(void)backToLogin
 {
-    if ([_registerBtn.titleLabel.text isEqualToString:@"Verify"])
+    if ([_registerBtn.titleLabel.text isEqualToString:@"Verify"]||[_registerBtn.titleLabel.text isEqualToString:@"提交"])
     {
         [UIView animateWithDuration:DURATION animations:^{
             [self setLoginUI];
@@ -235,10 +295,11 @@
 #pragma mark - 设置密码
 -(void)registerNewPwd:(id)sender
 {
+    BOOL isEng=_currentLanguage==EBOXEnglish?YES:NO;
     [UIView animateWithDuration:DURATION animations:^{
-        if (![_registerBtn.titleLabel.text isEqualToString:@"Verify"])
+        if (![_registerBtn.titleLabel.text isEqualToString:@"Verify"]&&![_registerBtn.titleLabel.text isEqualToString:@"提交"])
         {
-            NSString*btnTitle=@"Verify";
+            NSString*btnTitle=isEng?@"Verify":@"提交";
             NSMutableDictionary *textAttrs=[NSMutableDictionary dictionary];
             textAttrs[NSFontAttributeName]=[UIFont fontWithName:@"Papyrus" size:12];
             textAttrs[NSForegroundColorAttributeName]=[UIColor greenColor];
@@ -306,7 +367,7 @@
             if ([CoreDataManger updateEnterPassword:_pwdTf.text])
             {
                 [SoundBox playSound:SoundTypeSuccess];
-                [TipsAlertView showInTarget:self withMessage:@"Success!" andTextColor:[UIColor greenColor]];
+                [TipsAlertView showInTarget:self withMessage:isEng?@"Success!":@"成功!" andTextColor:[UIColor greenColor]];
                 [self setLoginUI];
                 [self clearAllTextField];
             }
@@ -350,7 +411,12 @@
 #pragma mark - 设置密码成功后回到开始页面
 -(void)setLoginUI
 {
-    NSString*btnTitle=@"Set a New PassWord";
+    NSString*btnTitle;
+    if ([LZZSetting getCurrentLanguage]==EBOXEnglish) {
+        btnTitle=@"Set a New PassWord";
+    }else{
+        btnTitle=@"设置新密码";
+    }
     NSMutableDictionary *textAttrs=[NSMutableDictionary dictionary];
     textAttrs[NSFontAttributeName]=[UIFont fontWithName:@"Papyrus" size:12];
     textAttrs[NSForegroundColorAttributeName]=[UIColor greenColor];
@@ -376,8 +442,11 @@
     if ([passWord isEqualToString:enterPwd])
     {
         [SoundBox playSound:SoundTypeSuccess];
-        IntroductionViewController*vc=[self.storyboard instantiateViewControllerWithIdentifier:@"introductionView"];
-        [self presentViewController:vc animated:NO completion:nil];
+        
+        
+        AccountLIstTableViewController*vc=[self.storyboard instantiateViewControllerWithIdentifier:@"accountList"];
+        UINavigationController*nvc=[[UINavigationController alloc] initWithRootViewController:vc];
+        [self presentViewController:nvc animated:YES completion:nil];
         
         [self clearAllTextField];
     }
@@ -570,7 +639,45 @@
     return YES;
 }
 
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    [_tf removeFromSuperview];
+    [_charView1 removeFromSuperview];
+    [_charView2 removeFromSuperview];
+    [_charView3 removeFromSuperview];
+    [_charView4 removeFromSuperview];
+    _shaker=nil;
+    [_registerBtn removeFromSuperview];
+    
+    [_orignPwdTf removeFromSuperview];
+    [_pwdTf removeFromSuperview];
+    [_verifyPwdTf removeFromSuperview];
+    
+    [_timer invalidate];
+    _timer = nil;
+    
+    _swipe=nil;
+    
+    
+}
+
+-(void)changeBottomLabel
+{
+    BOOL isEng=_currentLanguage==EBOXEnglish?YES:NO;
+    NSMutableAttributedString * attStrA=[[NSMutableAttributedString alloc] initWithAttributedString:_bottomLabelA.attributedText];
+    [attStrA replaceCharactersInRange:NSMakeRange(0, attStrA.length) withString:isEng?@"Welcome to use EncryptBox":@"欢迎使用EncryptBox"];
+    _bottomLabelA.attributedText=attStrA;
+    NSMutableAttributedString * attStrB=[[NSMutableAttributedString alloc] initWithAttributedString:_bottomLabelB.attributedText];
+    [attStrB replaceCharactersInRange:NSMakeRange(0, attStrB.length) withString:isEng?@"Your safe box™":@"你最安全的密码箱™"];
+    _bottomLabelB.attributedText=attStrB;
+    
+}
+
+
 - (void)didReceiveMemoryWarning {
+    NSLog(@"内存爆了");
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }

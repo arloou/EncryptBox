@@ -29,7 +29,7 @@
             label.textAlignment=NSTextAlignmentCenter;
             label.font=[UIFont fontWithName:@"Helvetica-Bold" size:12+multipleNum];
             label.backgroundColor=[UIColor clearColor];
-            label.textColor=[UIColor colorWithRed:0 green:1 blue:0 alpha:0.2+0.1*(rand()%8)];
+            label.textColor=[UIColor colorWithRed:0 green:1 blue:0 alpha:0.1+0.1*(rand()%4)];
 
             char x=(char)('0'+(arc4random_uniform(50)));
             NSString*charStr=[NSString stringWithFormat:@"%c",x];

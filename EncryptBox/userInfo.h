@@ -8,7 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+
+
 @interface userInfo : NSObject
+
+
+
 +(instancetype)shareInfo;
 
 @property(nonatomic,strong)NSString * enterPassWord;

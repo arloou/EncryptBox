@@ -11,5 +11,6 @@
 @interface NSString (Extension)
 
 -(BOOL)isEnterPwdFormatter;
-
+-(BOOL)isEmpty;
+-(NSString * )formatToSecuDisplayUserName;
 @end

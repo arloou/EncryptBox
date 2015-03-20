@@ -9,14 +9,13 @@
 #import "userInfo.h"
 
 @implementation userInfo
-
-
 +(instancetype)shareInfo
 {
     static userInfo *instance = nil;
     static dispatch_once_t predicate;
     dispatch_once(&predicate, ^{
         instance = [[self alloc] init];
+        
     });
     return instance;
 }
@@ -26,7 +25,9 @@
 {
     _enterPassWord=enterPassWord;
     [[NSUserDefaults standardUserDefaults] setValue:_enterPassWord forKey:@"EnterPassWord"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
+
 
 
 @end
